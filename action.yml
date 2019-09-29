@@ -1,0 +1,24 @@
+name: 'create-deployment-status'
+description: 'An action to create a deployment status'
+author: 'Bas Peters'
+inputs:
+  repo_token:
+    description: 'The GITHUB_TOKEN secret'
+    required: true
+  deployment_id:
+    description: 'The deployment id'
+    required: true
+  state:
+    description: 'The state of the status'
+    required: true
+  target_url:
+    description: 'The target URL to associate with this status'
+    required: false
+    default: ''
+  log_url: 
+    description: 'The full URL of the deployments output'
+    required: false
+    default: ''
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
