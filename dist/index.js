@@ -11076,12 +11076,25 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core = __importStar(__webpack_require__(827));
 const github = __importStar(__webpack_require__(148));
+function asDeploymentStatusState(value) {
+    switch (value) {
+        case "error":
+        case "failure":
+        case "inactive":
+        case "in_progress":
+        case "queued":
+        case "pending":
+        case "success":
+            return value;
+    }
+    throw new Error('Unknown deployment status');
+}
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const token = core.getInput('repo_token', { required: true });
             const deploymentId = Number(core.getInput('deployment_id', { required: true }));
-            const state = core.getInput('state', { required: true });
+            const state = asDeploymentStatusState(core.getInput("state", { required: true }));
             const targetUrl = core.getInput('target_url');
             const logUrl = core.getInput('log_url');
             const client = new github.GitHub(token);
