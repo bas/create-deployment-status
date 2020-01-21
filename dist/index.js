@@ -8977,12 +8977,13 @@ function run() {
 }
 function createDeploymentStatus(client, deploymentId, state, targetUrl, logUrl) {
     return __awaiter(this, void 0, void 0, function* () {
-        var mediaType = "";
+        var previews;
+        previews = [];
         if (state === "inactive") {
-            mediaType = "application/vnd.github.ant-man-preview+json";
+            previews.push("ant-man");
         }
         else if (state === "in_progress" || state == "queued") {
-            mediaType = "application/vnd.github.flash-preview+json";
+            previews.push("flash");
         }
         const response = yield client.repos.createDeploymentStatus({
             owner: github.context.repo.owner,
@@ -8992,7 +8993,7 @@ function createDeploymentStatus(client, deploymentId, state, targetUrl, logUrl) 
             target_url: targetUrl,
             log_url: logUrl,
             mediaType: {
-                format: mediaType
+                previews
             }
         });
     });

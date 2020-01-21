@@ -52,11 +52,12 @@ async function createDeploymentStatus(
   targetUrl: string,
   logUrl: string
 ) {
-  var mediaType = "";
+  var previews: string[];
+  previews = [];
   if (state === "inactive") {
-    mediaType = "application/vnd.github.ant-man-preview+json";
+    previews.push("ant-man");
   } else if (state === "in_progress" || state == "queued") {
-    mediaType = "application/vnd.github.flash-preview+json";
+    previews.push("flash");
   }
 
   const response = await client.repos.createDeploymentStatus({
@@ -67,7 +68,7 @@ async function createDeploymentStatus(
     target_url: targetUrl,
     log_url: logUrl,
     mediaType: {
-      format: mediaType
+      previews
     }
   });
 }
